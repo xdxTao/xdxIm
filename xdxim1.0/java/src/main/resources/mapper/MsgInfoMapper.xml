@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdx97.socket.mapper.MsgInfoMapper">
+  <resultMap id="BaseResultMap" type="com.xdx97.socket.bean.MsgInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="from_user_id" jdbcType="INTEGER" property="fromUserId" />
+    <result column="from_user_name" jdbcType="VARCHAR" property="fromUserName" />
+    <result column="to_user_id" jdbcType="INTEGER" property="toUserId" />
+    <result column="to_user_name" jdbcType="VARCHAR" property="toUserName" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="un_read_flag" jdbcType="INTEGER" property="unReadFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, from_user_id, from_user_name, to_user_id,to_user_name, content, create_time, un_read_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from msg_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from msg_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xdx97.socket.bean.MsgInfo"  useGeneratedKeys="true" keyProperty="id">
+    insert into msg_info (id, from_user_id, from_user_name, 
+      to_user_id, to_user_name, content, create_time,
+      un_read_flag)
+    values (#{id,jdbcType=INTEGER}, #{fromUserId,jdbcType=INTEGER}, #{fromUserName,jdbcType=VARCHAR}, 
+      #{toUserId,jdbcType=INTEGER},#{toUserName,jdbcType=VARCHAR},  #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{unReadFlag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xdx97.socket.bean.MsgInfo">
+    insert into msg_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fromUserId != null">
+        from_user_id,
+      </if>
+      <if test="fromUserName != null">
+        from_user_name,
+      </if>
+      <if test="toUserId != null">
+        to_user_id,
+      </if>
+      <if test="toUserName != null">
+        to_user_name,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="unReadFlag != null">
+        un_read_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="fromUserId != null">
+        #{fromUserId,jdbcType=INTEGER},
+      </if>
+      <if test="fromUserName != null">
+        #{fromUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="toUserId != null">
+        #{toUserId,jdbcType=INTEGER},
+      </if>
+      <if test="toUserName != null">
+        #{toUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unReadFlag != null">
+        #{unReadFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdx97.socket.bean.MsgInfo">
+    update msg_info
+    <set>
+      <if test="fromUserId != null">
+        from_user_id = #{fromUserId,jdbcType=INTEGER},
+      </if>
+      <if test="fromUserName != null">
+        from_user_name = #{fromUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="toUserId != null">
+        to_user_id = #{toUserId,jdbcType=INTEGER},
+      </if>
+      <if test="toUserName != null">
+        to_user_name = #{toUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unReadFlag != null">
+        un_read_flag = #{unReadFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xdx97.socket.bean.MsgInfo">
+    update msg_info
+    set from_user_id = #{fromUserId,jdbcType=INTEGER},
+      from_user_name = #{fromUserName,jdbcType=VARCHAR},
+      to_user_id = #{toUserId,jdbcType=INTEGER},
+      to_user_name = #{toUserName,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      un_read_flag = #{unReadFlag,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="select" resultMap="BaseResultMap">
+    SELECT * FROM msg_info
+    WHERE 1 = 1
+    <if test="fromUserId != null">
+      AND from_user_id = #{fromUserId,jdbcType=INTEGER}
+    </if>
+    <if test="fromUserName != null">
+      AND from_user_name = #{fromUserName,jdbcType=VARCHAR}
+    </if>
+    <if test="toUserId != null">
+      AND to_user_id = #{toUserId,jdbcType=INTEGER}
+    </if>
+    <if test="toUserName != null">
+      AND to_user_name = #{toUserName,jdbcType=VARCHAR}
+    </if>
+    <if test="content != null">
+      AND content = #{content,jdbcType=VARCHAR}
+    </if>
+    <if test="createTime != null">
+      AND create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="unReadFlag != null">
+      AND un_read_flag = #{unReadFlag,jdbcType=INTEGER}
+    </if>
+    </select>
+
+  <update id="msgRead">
+      UPDATE msg_info SET un_read_flag = 1 WHERE from_user_id = #{fromUserId} AND to_user_id = #{toUserId}
+  </update>
+
+  <select id="selectMsgList" resultMap="BaseResultMap">
+    SELECT * FROM msg_info
+    WHERE (
+        (to_user_id = #{toUserId} AND from_user_id = #{fromUserId})
+        OR (to_user_id = #{fromUserId} AND from_user_id = #{toUserId})
+    )
+  </select>
+</mapper>

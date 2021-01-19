@@ -1,0 +1,19 @@
+server:
+    port: 1997
+
+mybatis:
+    type-aliases-package: com.xdx97.socket.bean              # 所有Entity别名类所在包
+    mapper-locations: classpath:mapper/**/*Mapper.xml      # mapper映射文件 - classpath:mybatis/mapper/**/*.xml
+
+spring:
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/websocket?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=UTC
+        username: root
+        password: 123456
+        druid:
+            min-idle: 5                                 # 数据库连接池最小维持连接数
+            initial-size: 5                            # 初始连接数
+            max-total: 5                               # 最大连接数
+            max-wait-millis: 200                      # 等待链接获取的最大超时时间
