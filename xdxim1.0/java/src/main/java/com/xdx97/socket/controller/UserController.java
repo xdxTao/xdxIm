@@ -20,7 +20,7 @@ public class UserController {
     public AjaxResult<?> register(@RequestParam String name) {
         String s = userMapper.selectByName(name);
         if (s != null || "".equals(s)){
-            return AjaxResult.failure("改用户已存在");
+            return AjaxResult.failure("该用户已存在");
         }
         User user = new User();
         user.setName(name);
