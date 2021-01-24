@@ -18,7 +18,7 @@ public class JsonUtils {
     // 定义jackson对象
     private static ObjectMapper MAPPER = new ObjectMapper();
 
-    {
+    static {
         MAPPER.setSerializationInclusion(Include.ALWAYS);
     }
 
@@ -26,53 +26,63 @@ public class JsonUtils {
      * 将对象转换成json字符串。
      * <p>Title: pojoToJson</p>
      * <p>Description: </p>
+     *
      * @param data
      * @return
      */
     public static String objectToJson(Object data) {
+        String string = null;
         try {
-            String string = MAPPER.writeValueAsString(data);
-            return string;
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            string = writeValueAsString(data);
+        } catch (Exception e) {
+            // TODO use 'log' for logging
         }
-        return null;
+        return string;
     }
 
     public static JsonNode stringToJsonNode(String data) {
+        JsonNode jsonNode = null;
         try {
-            JsonNode jsonNode = MAPPER.readTree(data);
-            return jsonNode;
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            jsonNode = readTree(data);
+        } catch (Exception e) {
+            // TODO use 'log' for logging
         }
-        return null;
+        return jsonNode;
     }
 
     /**
      * 将json结果集转化为对象
      *
      * @param jsonData json数据
-     * @param clazz 对象中的object类型
+     * @param clazz    对象中的object类型
      * @return
      * @throws Exception
      */
-    public static <T> T objectToPojo(Object jsonData, Class<T> beanType) throws Exception {
-        T t = MAPPER.readValue(MAPPER.writeValueAsString(jsonData), beanType);
-        return t;
+    public static <T> T objectToPojo(Object jsonData, Class<T> beanType) {
+        String string = null;
+        try {
+            string = writeValueAsString(jsonData);
+        } catch (Exception e) {
+            // TODO use 'log' for logging
+        }
+        return jsonToPojo(string, beanType);
     }
 
     /**
      * 将json结果集转化为对象
      *
      * @param jsonData json数据
-     * @param clazz 对象中的object类型
+     * @param clazz    对象中的object类型
      * @return
      * @throws Exception
      */
-    public static <T> T jsonToPojo(String jsonData, Class<T> beanType) throws Exception {
-        T t = MAPPER.readValue(jsonData, beanType);
+    public static <T> T jsonToPojo(String jsonData, Class<T> beanType) {
+        T t = null;
+        try {
+            t = readValue(jsonData, beanType);
+        } catch (Exception e) {
+            // TODO use 'log' for logging
+        }
         return t;
     }
 
@@ -80,55 +90,65 @@ public class JsonUtils {
      * 将json数据转换成pojo对象list
      * <p>Title: jsonToList</p>
      * <p>Description: </p>
+     *
      * @param jsonData
      * @param beanType
      * @return
      */
-    public static <T>List<T> jsonToList(String jsonData, Class<T> beanType) {
-        JavaType javaType = MAPPER.getTypeFactory().constructParametricType(List.class, beanType);
+    public static <T> List<T> jsonToList(String jsonData, Class<T> beanType) {
+        List<T> list = null;
         try {
-            List<T> list = MAPPER.readValue(jsonData, javaType);
-            return list;
+            list =  readValueList(jsonData, beanType);
         } catch (Exception e) {
-            e.printStackTrace();
+            // TODO use 'log' for logging
         }
-
-        return null;
+        return list;
     }
 
     /**
      * 将object数据转换成pojo对象list
      * <p>Title: jsonToList</p>
      * <p>Description: </p>
+     *
      * @param jsonData
      * @param beanType
      * @return
      */
-    public static <T>List<T> objectToList(Object jsonData, Class<T> beanType) {
-        JavaType javaType = MAPPER.getTypeFactory().constructParametricType(List.class, beanType);
+    public static <T> List<T> objectToList(Object jsonData, Class<T> beanType) {
+        String string = null;
         try {
-            List<T> list = MAPPER.readValue(MAPPER.writeValueAsString(jsonData), javaType);
-            return list;
+            string = writeValueAsString(jsonData);
         } catch (Exception e) {
-            e.printStackTrace();
+            // TODO use 'log' for logging
         }
-
-        return null;
+        return jsonToList(string, beanType);
     }
 
     /**
      * 将JSON数据转换成Map
+     *
      * @param jsonData
      * @return
      */
-    public static Map<String,Object> jsonToMap(String jsonData) {
-        try {
-            Map map = MAPPER.readValue(jsonData, Map.class);
-            return map;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static Map<String, Object> jsonToMap(String jsonData) {
+        return jsonToPojo(jsonData, Map.class);
+    }
+
+    private static String writeValueAsString(Object value) throws Exception {
+        return MAPPER.writeValueAsString(value);
+    }
+
+    private static JsonNode readTree(String value) throws Exception {
+        return MAPPER.readTree(value);
+    }
+
+    private static <T> T readValue(String jsonData, Class<T> beanType) throws Exception {
+        return MAPPER.readValue(jsonData, beanType);
+    }
+
+    private static <T> List<T> readValueList(String jsonData, Class<T> beanType) throws Exception {
+        JavaType javaType = MAPPER.getTypeFactory().constructParametricType(List.class, beanType);
+        return MAPPER.readValue(writeValueAsString(jsonData), javaType);
     }
 
 }
