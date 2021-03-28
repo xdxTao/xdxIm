@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdx97.mapper.KfInfoMapper">
+  <resultMap id="BaseResultMap" type="com.xdx97.bean.KfInfo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="kf_name" jdbcType="VARCHAR" property="kfName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, kf_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from kf_info
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from kf_info
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xdx97.bean.KfInfo">
+    insert into kf_info (id, kf_name)
+    values (#{id,jdbcType=VARCHAR}, #{kfName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xdx97.bean.KfInfo">
+    insert into kf_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="kfName != null">
+        kf_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="kfName != null">
+        #{kfName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xdx97.bean.KfInfo">
+    update kf_info
+    <set>
+      <if test="kfName != null">
+        kf_name = #{kfName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xdx97.bean.KfInfo">
+    update kf_info
+    set kf_name = #{kfName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="select" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM kf_info
+    <where>
+      <if test="id != null">
+        AND id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="kfName != null">
+        kf_name = #{kfName,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+</mapper>
