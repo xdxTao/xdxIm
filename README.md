@@ -36,9 +36,9 @@ B站视频地址：[https://www.bilibili.com/video/BV1WU4y147we](https://www.bil
 
 
 
-B站视频地址：
+B站视频地址：[https://www.bilibili.com/video/BV1aA411N7hu](https://www.bilibili.com/video/BV1aA411N7hu)
 
-文章地址：
+文章地址：[https://www.xdx97.com/article/827202631150600192](https://www.xdx97.com/article/827202631150600192)
 
 
 <br/><br/>
